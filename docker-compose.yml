@@ -39,6 +39,9 @@ services:
       - SPARK_SSL_ENABLED=no
     networks:
       - network
+  
+  kafka:
+    
 
 networks:
   network:
