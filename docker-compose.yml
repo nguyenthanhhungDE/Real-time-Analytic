@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  master:
+    build: 
+      context: ./docker/spark_cluster
+      dockerfile: Dockerfile
+    container_name: "master"
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_USER=spark
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    expose:
+      - "7077"
+    volumes:
+      - ./docker/spark_cluster/conf/spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
+      - ./docker/spark_cluster/conf/log4j.properties:/opt/bitnami/spark/conf/log4j.properties
+    networks:
+      - network
+
+  worker-1:
+    build: 
+      context: ./docker/spark_cluster
+      dockerfile: Dockerfile
+    container_name: "worker-1"
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://master:7077
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=2
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
+    name: network
