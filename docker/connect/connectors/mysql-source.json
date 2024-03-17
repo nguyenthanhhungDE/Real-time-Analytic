@@ -3,15 +3,15 @@
   "config": {
     "connector.class": "io.debezium.connector.mysql.MySqlConnector",
     "tasks.max": "1",
-    "database.hostname": "mysql",
+    "database.hostname": "192.168.1.4",
     "database.allowPublicKeyRetrieval":"true",
-    "database.port": "3306",
-    "database.user": "debezium",
-    "database.password": "dbz",
+    "database.port": "3307",
+    "database.user": "root",
+    "database.password": "admin",
     "database.server.id": "1010101",
     "database.server.name": "mysql",
-    "database.whitelist": "demo",
-    "database.history.kafka.bootstrap.servers": "broker:9092",
+    "database.whitelist": "market",
+    "database.history.kafka.bootstrap.servers": "broker:29092",
     "database.history.kafka.topic": "mysql.schema-changes"
   }
 }
